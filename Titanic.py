@@ -80,7 +80,29 @@ plt.ylabel("Count")
 
 plt.subplot(1, 2, 2)
 df.boxplot(column="Age", showfliers=False)
+plt.show()
+
 df["Age"].describe()
 
-# %% Correlation between age and survival
-df2 = df.groupby(["Sex", "Survived"])["Survived"].count()
+# %% Relation between age and survival
+# Barplot visualization.
+# It appears that female survivors are much more than males which indicates ladies first.
+df.groupby(["Sex", "Survived"])["Survived"].count()
+df[["Sex", "Survived"]].groupby(["Sex"]).mean().plot.bar()
+
+# %% Relation between ticket class and survival
+# Barplot visualization.
+# It appears that people conform ladies first in general but may depend on different ticket classes.
+df.groupby(["Pclass", "Survived"])["Survived"].count()
+df[["Pclass", "Survived"]].groupby(["Pclass"]).mean().plot.bar()
+
+df.groupby(["Pclass", "Surivived", "Sex"])["Survived"].count()
+df[["Pclass", "Survived", "Sex"]].groupby(["Pclass", "Sex"]).mean().plot.bar()
+
+# %% Relation among age, ticket class and survival
+# Violin plot visualization
+#
+plt.figure(figsize=(18,8))
+plt.subplot(1, 2, 1)
+sns.violinplot("Pclass", "Age", hue="Survived", data=df, split=True)
+plt.title("Pclass and Age vs Survived")
