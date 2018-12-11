@@ -106,3 +106,25 @@ plt.figure(figsize=(18,8))
 plt.subplot(1, 2, 1)
 sns.violinplot("Pclass", "Age", hue="Survived", data=df, split=True)
 plt.title("Pclass and Age vs Survived")
+
+plt.subplot(1, 2, 2)
+sns.violinplot("Sex", "Age", hue="Survived", data=df, split=True)
+plt.title("Sex and Age vs Survived")
+
+plt.show()
+
+plt.figure(figsize=(12,5))
+plt.subplot(1, 2, 1)
+df["Age"].hist(bins=70)
+plt.xlabel("Age")
+plt.ylabel("Num")
+
+plt.subplot(1, 2, 2)
+df.boxplot(column="Age", showfliers=False)
+
+plt.show()
+
+facet = sns.FacetGrid(df, hue="Survived", aspect=4)
+facet.map(sns.kdeplot, "Age", shade=True)
+facet.set(xlim=(0, df["Age"].max()))
+facet.add_legend()
