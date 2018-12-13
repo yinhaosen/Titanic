@@ -96,7 +96,7 @@ df[["Sex", "Survived"]].groupby(["Sex"]).mean().plot.bar()
 df.groupby(["Pclass", "Survived"])["Survived"].count()
 df[["Pclass", "Survived"]].groupby(["Pclass"]).mean().plot.bar()
 
-df.groupby(["Pclass", "Surivived", "Sex"])["Survived"].count()
+df.groupby(["Pclass", "Survived", "Sex"])["Survived"].count()
 df[["Pclass", "Survived", "Sex"]].groupby(["Pclass", "Sex"]).mean().plot.bar()
 
 # %% Relation among age, ticket class and survival
@@ -128,3 +128,11 @@ facet = sns.FacetGrid(df, hue="Survived", aspect=4)
 facet.map(sns.kdeplot, "Age", shade=True)
 facet.set(xlim=(0, df["Age"].max()))
 facet.add_legend()
+
+plt.figure(figsize=(18,4))
+plt.subplot(1, 1, 1)
+df["Age_int"] = df["Age"].astype(int)
+average_age = df[["Age_int", "Survived"]].groupby(["Age_int"], as_index=False).mean()
+sns.barplot(x="Age_int", y="Survived", data=average_age)
+
+pd.cut()
